@@ -54,8 +54,21 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Long createOrder(OrderTO order) {
-		// TODO Auto-generated method stub
-		return null;
+		OrderDO orderDO = orderTOtoorderDO(order);
+		orderDO.setId(null);
+		orderDAO.save(orderDO);
+		orderDAO.flush();
+		
+		List<OrderDetailDO> detalles = new ArrayList<OrderDetailDO>();
+		order.getDetails().forEach(e -> {
+			detalles.add(OrderDetailcastTOtoDO(e,orderDO));
+		});
+		
+		orderDetailDAO.saveAll(detalles);
+		orderDetailDAO.flush();
+		
+	
+		return orderDO.getId();
 	}
 
 	@Override
@@ -81,6 +94,29 @@ public class OrderServiceImpl implements OrderService {
 		OrderDetailTO response = new OrderDetailTO(e.getId(), e.getOrder().getId(), 
 				e.getSku(),e.getDescription(),e.getQuantity(),e.getPrice());
 		return response;
+	}
+
+	private OrderDO orderTOtoorderDO(OrderTO inOrder){
+		OrderDO response = new OrderDO();
+		response.setId(inOrder.getId());
+		response.setClientId(inOrder.getClientId());
+		response.setTs(inOrder.getTimestamp());
+		response.setTotal(inOrder.getTotal());
+		response.setDetails(orderDetailDAO.findDetailsByOrderId(inOrder.getId()));
+		return response;
+	}
+	
+	private OrderDetailDO OrderDetailcastTOtoDO(OrderDetailTO e, OrderDO order) {
+		OrderDetailDO response = new OrderDetailDO();
+		response.setId(e.getId());
+		response.setSku(e.getSku());
+		response.setDescription(e.getDescription());
+		response.setQuantity(e.getQuantity());
+		response.setPrice(e.getPrice());
+		response.setOrder(orderDAO.findById(order.getId()).get());
+		
+		return response;
+		
 	}
 
 }
