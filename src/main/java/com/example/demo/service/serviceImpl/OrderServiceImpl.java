@@ -54,8 +54,11 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Long createOrder(OrderTO order) {
-		// TODO Auto-generated method stub
-		return null;
+		OrderDO orderDO = orderTOtoorderDO(order);
+		orderDO.setId(null);
+		orderDAO.save(orderDO);
+		orderDAO.flush();
+		return orderDO.getId();
 	}
 
 	@Override
@@ -80,6 +83,16 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDetailTO castDetailDOtoTO(OrderDetailDO e) {
 		OrderDetailTO response = new OrderDetailTO(e.getId(), e.getOrder().getId(), 
 				e.getSku(),e.getDescription(),e.getQuantity(),e.getPrice());
+		return response;
+	}
+
+	private OrderDO orderTOtoorderDO(OrderTO inOrder){
+		OrderDO response = new OrderDO();
+		response.setId(inOrder.getId());
+		response.setClientId(inOrder.getClientId());
+		response.setTs(inOrder.getTimestamp());
+		response.setTotal(inOrder.getTotal());
+		response.setDetails(orderDetailDAO.findDetailsByOrderId(inOrder.getId()));
 		return response;
 	}
 

@@ -26,7 +26,6 @@ public class OrderDO {
 	@Column(name = "client_id")
 	private long clientId;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="ts")
 	private Date ts;
 	
