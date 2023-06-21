@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +33,13 @@ public class OrderController {
 	public ResponseEntity<OrderTO> getOrder(@PathVariable("id")Long id){
 		OrderTO order = orderService.getOrderById(id);
 		return ResponseEntity.ok(order);
+	}
+	
+	@PostMapping(path= " ",consumes= {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity <OrderTO> agregarOrder(@RequestBody OrderTO orderTO){
+		orderService.createOrder(orderTO);
+		return ResponseEntity.ok(orderTO);
+		
 	}
 	
 	
