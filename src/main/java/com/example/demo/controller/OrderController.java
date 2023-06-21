@@ -37,4 +37,11 @@ public class OrderController {
 		return ResponseEntity.ok(request);
 	}
 	
+	@DeleteMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	 public ResponseEntity<?> deleteProductos(@PathVariable("id") Long id) {
+		orderService.deleteOrder(id);		
+		return new ResponseEntity<>(true, HttpStatus.OK);
+		
+	}
+	
 }

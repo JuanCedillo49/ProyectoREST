@@ -73,13 +73,15 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void editOrder(OrderTO order) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void deleteOrder(Long id) {
 		// TODO Auto-generated method stub
+		OrderDO todelete = orderDAO.findById(id).get();
+		orderDAO.delete(todelete);
 		
 	}
 
