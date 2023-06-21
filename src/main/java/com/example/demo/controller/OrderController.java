@@ -44,4 +44,10 @@ public class OrderController {
 		
 	}
 	
+	@PutMapping (path = " ", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<OrderTO> updateOrder(@RequestBody OrderTO request){
+		orderService.editOrder(request);
+		return ResponseEntity.ok(request);
+	}
+	
 }

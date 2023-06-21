@@ -73,7 +73,10 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void editOrder(OrderTO order) {
-		
+		OrderDO orderDO = orderDAO.findById(order.getId()).get();
+		orderDO = orderTOtoorderDO(order);
+		orderDAO.save(orderDO);
+		orderDAO.flush();
 		
 	}
 
