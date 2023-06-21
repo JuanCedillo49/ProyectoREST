@@ -10,6 +10,6 @@ public interface OrderService {
 	List<OrderTO> getAllOrders();
 	OrderTO getOrderById(Long id);
 	Long createOrder(OrderTO order);
-	void editOrder(OrderTO order);
+	void editOrder(OrderTO order, Long id);
 	void deleteOrder(Long id);
 }

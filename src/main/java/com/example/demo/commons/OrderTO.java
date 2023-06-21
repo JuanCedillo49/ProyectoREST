@@ -83,6 +83,15 @@ public class OrderTO {
 	public void setDetails(List<OrderDetailTO> details) {
 		this.details = details;
 	}
-    
-    
+
+	@Override
+	public String toString() {
+		return "OrderTO{" +
+				"id=" + id +
+				", clientId=" + clientId +
+				", timestamp=" + timestamp +
+				", total=" + total +
+				", details=" + details +
+				'}';
+	}
 }

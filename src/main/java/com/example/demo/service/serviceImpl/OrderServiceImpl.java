@@ -3,6 +3,7 @@ package com.example.demo.service.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,8 +73,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void editOrder(OrderTO order) {
-		
+	public void editOrder(OrderTO order, Long id) {
+
+		OrderDO orderDO = orderTOtoorderDO(order);
+		orderDO.setId(orderDAO.findById(id).get().getId());
+
+		orderDAO.save(orderDO);
+		orderDAO.flush();
 		
 	}
 
@@ -82,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		OrderDO todelete = orderDAO.findById(id).get();
 		orderDAO.delete(todelete);
-		
+
 	}
 
 	private OrderTO castingDOtoTO(OrderDO order) {

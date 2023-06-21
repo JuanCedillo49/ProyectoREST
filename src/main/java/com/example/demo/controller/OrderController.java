@@ -43,5 +43,11 @@ public class OrderController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 		
 	}
-	
+
+	@PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<OrderTO> updateOrder(@PathVariable("id") Long id, @RequestBody OrderTO request){
+		orderService.editOrder(request, id);
+		return ResponseEntity.ok(request);
+	}
+
 }
